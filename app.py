@@ -320,7 +320,6 @@ def load_sent_sms_keys():
 def save_sent_sms_keys(keys):
     save_json_data(SENT_SMS_FILE, list(keys))
 
-# New global variables for the API-based manager
 PANEL_BASE_URL = "http://51.89.99.105/NumberPanel"
 PANEL_SMS_URL = "http://51.89.99.105/NumberPanel/agent/SMSDashboard"
 
@@ -341,18 +340,13 @@ def mask_phone_number(phone_number: str) -> str:
     if not phone_number:
         return "N/A"
 
-    # Clean the number to digits only, preserving '+' if it's at the very beginning
+
     clean_number = re.sub(r'\D', '', phone_number)
     
     # Find the country code
     country_name, country_flag = detect_country_from_phone(phone_number)
     
     if country_name != "Unknown":
-        # This is a bit of a hack, but we need to get the country code length
-        # to correctly mask the number. We can do this by finding the country
-        # code in the `country_codes` dictionary in `detect_country_from_phone`.
-        # This is not ideal, but it's the best we can do without changing the
-        # `detect_country_from_phone` function to return the country code as well.
         phone_str = str(phone_number).replace("+", "").replace(" ", "").replace("-", "")
         country_codes = {
             "1": ("United States", "🇺🇸"),
@@ -573,9 +567,9 @@ def mask_phone_number(phone_number: str) -> str:
     else:
         # If no country code found, treat the whole number as local
         local_number_digits = clean_number
-        country_code_prefix = "" # Ensure it's empty if not found
+        country_code_prefix = ""
 
-    # Define how many digits to show at the beginning and end of the local number
+
     visible_start_local = 2
     visible_end_local = 5
 
@@ -828,7 +822,6 @@ def get_number_formats(phone_number_str):
     else:
         return f"+{num}", num
 
-# --- Modern API-based SMS Manager Class ---
 class NewPanelSmsManager:
     _instance = None
     _is_initialized = False
@@ -852,7 +845,6 @@ class NewPanelSmsManager:
             self._initialize_api()
     
     def _initialize_api(self):
-        """Initialize API-based SMS fetching"""
         self._is_initialized = True
         logging.info("API-based SMS manager initialized")
 
@@ -872,14 +864,11 @@ class NewPanelSmsManager:
             logging.error(f"Cannot send critical admin alert, bot application not set: {error_msg}")
     
     def get_api_url(self):
-        """Get API URL for SMS data"""
         today = datetime.now().strftime("%Y-%m-%d")
         # wider length to reduce pagination misses
         return f"{PANEL_BASE_URL}/agent/res/data_smscdr.php?fdate1={today}+00:00:00&fdate2={today}+23:59:59&iDisplayLength=200"
     
     def fetch_sms_from_api(self):
-        """Fetch SMS data by getting structured JSON from the dedicated data endpoint."""
-        # 1. Check session validity by hitting the main HTML page
         session_check_headers = {
             "cookie": f"PHPSESSID={PHPSESSID}",
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0"
@@ -891,10 +880,8 @@ class NewPanelSmsManager:
             soup = BeautifulSoup(html_resp.text, "html.parser")
             title_tag = soup.find('title')
             
-            # CRITICAL SESSION CHECK: If we see the login page, session is bad.
             if title_tag and 'Login' in title_tag.get_text():
                 logging.error("Session check: appears to be login page. Update PHPSESSID.")
-                # Need to run async function from sync context
                 if self._application and self._loop:
                     asyncio.run_coroutine_threadsafe(
                         self._send_critical_admin_alert(f"🚨 CRITICAL: Panel Session Expired! Update PHPSESSID in config.txt IMMEDIATELY. Time: {get_bst_now().strftime('%H:%M:%S')} BST"),
@@ -905,7 +892,6 @@ class NewPanelSmsManager:
             logging.warning(f"Initial session check failed: {e}")
             return [] # Cannot proceed without a valid session or check
 
-        # 2. Fetch SMS data from the structured JSON endpoint
         data_url = self.get_api_url()
         data_headers = {
             "accept": "application/json, text/javascript, */*; q=0.01",
@@ -921,7 +907,6 @@ class NewPanelSmsManager:
                 data_resp = requests.get(data_url, headers=data_headers, timeout=10)
                 data_resp.raise_for_status()
                 
-                # Datatables often returns JSON with 'aaData' key
                 json_data = data_resp.json()
                 
                 if 'aaData' in json_data and isinstance(json_data['aaData'], list):
@@ -952,8 +937,6 @@ class NewPanelSmsManager:
             
             for row in sms_data:
                 try:
-                    # NOTE: Row indexing remains consistent with the Datatables JSON response format:
-                    # [time, country/provider, number, service, status, message]
                     if len(row) >= 6:
                         # Extract data from API response
                         time_str = row[0] if len(row) > 0 else "N/A"
