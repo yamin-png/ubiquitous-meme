@@ -15,7 +15,8 @@ A Telegram bot for fetching OTPs and managing phone numbers from a panel.
 1.  **Clone the repository:**
     ```bash
     
-    git clone <repository_url>
+    pkg install git
+    git clone https://github.com/yamin-png/ubiquitous-meme.git
     cd ubiquitous-meme
     ```
 
