@@ -926,7 +926,7 @@ class IvaSmsManager:
                     uc=True, 
                     headless=True,
                     user_data_dir=data_dir, # Use the robust, absolute path
-                    driver_args=["--no-sandbox", "--disable-dev-shm-usage"] # <-- ADD THIS LINE
+                    args=["--no-sandbox", "--disable-dev-shm-usage"] # <-- CHANGED 'driver_args' to 'args'
                 )
                 logging.info(f"✅ Created SeleniumBase driver with persistent session at {data_dir}")
                 return driver
