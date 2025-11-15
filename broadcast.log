@@ -1,0 +1,267 @@
+2025-11-10 19:27:47,897 ERROR TELEGRAM_BOT_TOKEN not found in config.txt
+2025-11-10 19:28:41,436 INFO Starting broadcast to 204 users.
+2025-11-10 19:28:42,374 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:42,916 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:43,472 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:44,014 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:44,571 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:45,111 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:45,620 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:28:45,620 ERROR Failed to send broadcast to 5671566706: Forbidden: bot was blocked by the user
+2025-11-10 19:28:45,620 WARNING User 5671566706 blocked the bot. Consider removing them.
+2025-11-10 19:28:46,048 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:46,586 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:47,126 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:47,681 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:48,226 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:48,761 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:49,381 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:49,921 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:50,575 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:51,115 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:51,683 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:52,243 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:52,785 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:53,327 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:53,851 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:28:53,867 ERROR Failed to send broadcast to 6279539466: Forbidden: bot was blocked by the user
+2025-11-10 19:28:53,867 WARNING User 6279539466 blocked the bot. Consider removing them.
+2025-11-10 19:28:54,309 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:54,630 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:28:54,630 ERROR Failed to send broadcast to 7489438878: Forbidden: user is deactivated
+2025-11-10 19:28:55,059 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:55,601 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:56,254 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:56,797 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:57,336 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:57,844 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:28:57,844 ERROR Failed to send broadcast to 6790655536: Forbidden: bot was blocked by the user
+2025-11-10 19:28:57,844 WARNING User 6790655536 blocked the bot. Consider removing them.
+2025-11-10 19:28:58,332 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:58,867 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:59,414 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:28:59,946 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:00,532 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:01,057 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:01,073 ERROR Failed to send broadcast to 6687290482: Forbidden: bot was blocked by the user
+2025-11-10 19:29:01,073 WARNING User 6687290482 blocked the bot. Consider removing them.
+2025-11-10 19:29:01,281 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:01,281 ERROR Failed to send broadcast to 8118147462: Forbidden: user is deactivated
+2025-11-10 19:29:01,727 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:02,269 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:02,819 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:03,320 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:03,320 ERROR Failed to send broadcast to 5115781570: Forbidden: bot was blocked by the user
+2025-11-10 19:29:03,320 WARNING User 5115781570 blocked the bot. Consider removing them.
+2025-11-10 19:29:03,816 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:03,816 ERROR Failed to send broadcast to 6369779227: Forbidden: bot was blocked by the user
+2025-11-10 19:29:03,816 WARNING User 6369779227 blocked the bot. Consider removing them.
+2025-11-10 19:29:04,270 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:04,836 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:05,375 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:05,884 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:05,884 ERROR Failed to send broadcast to 8479143731: Forbidden: bot was blocked by the user
+2025-11-10 19:29:05,884 WARNING User 8479143731 blocked the bot. Consider removing them.
+2025-11-10 19:29:06,338 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:06,868 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:07,396 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:07,396 ERROR Failed to send broadcast to 8152405636: Forbidden: bot was blocked by the user
+2025-11-10 19:29:07,396 WARNING User 8152405636 blocked the bot. Consider removing them.
+2025-11-10 19:29:07,836 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:08,358 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:08,364 ERROR Failed to send broadcast to 7317458193: Forbidden: bot was blocked by the user
+2025-11-10 19:29:08,364 WARNING User 7317458193 blocked the bot. Consider removing them.
+2025-11-10 19:29:08,775 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:08,775 ERROR Failed to send broadcast to 6862744649: Forbidden: bot was blocked by the user
+2025-11-10 19:29:08,775 WARNING User 6862744649 blocked the bot. Consider removing them.
+2025-11-10 19:29:09,234 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:09,790 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:10,345 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:10,889 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:11,488 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:12,089 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:12,668 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:13,197 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:13,751 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:14,282 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:14,813 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:15,353 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:15,893 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:16,432 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:16,971 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:17,496 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:17,496 ERROR Failed to send broadcast to 5302473977: Forbidden: bot was blocked by the user
+2025-11-10 19:29:17,496 WARNING User 5302473977 blocked the bot. Consider removing them.
+2025-11-10 19:29:17,915 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:17,915 ERROR Failed to send broadcast to 6707785057: Forbidden: bot was blocked by the user
+2025-11-10 19:29:17,915 WARNING User 6707785057 blocked the bot. Consider removing them.
+2025-11-10 19:29:18,347 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:18,879 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:19,444 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:19,982 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:20,531 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:21,065 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:21,651 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:22,222 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:22,763 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:23,656 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:24,196 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:24,777 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:25,322 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:25,864 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:26,418 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:26,964 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:27,504 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:28,060 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:28,602 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:29,157 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:29,792 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:29,792 ERROR Failed to send broadcast to 6926748433: Forbidden: user is deactivated
+2025-11-10 19:29:30,237 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:30,795 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:31,322 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:31,322 ERROR Failed to send broadcast to 5119315081: Forbidden: bot was blocked by the user
+2025-11-10 19:29:31,322 WARNING User 5119315081 blocked the bot. Consider removing them.
+2025-11-10 19:29:31,750 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:32,291 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:32,813 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:32,813 ERROR Failed to send broadcast to 6478860920: Forbidden: bot was blocked by the user
+2025-11-10 19:29:32,813 WARNING User 6478860920 blocked the bot. Consider removing them.
+2025-11-10 19:29:33,254 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:33,810 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:34,344 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:34,883 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:35,883 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:36,440 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:37,075 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:37,636 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:38,185 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:38,734 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:39,286 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:39,814 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:40,354 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:40,895 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:41,216 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:41,216 ERROR Failed to send broadcast to 7236462840: Forbidden: user is deactivated
+2025-11-10 19:29:41,676 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:42,201 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:42,735 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:43,277 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:43,818 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:44,360 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:44,882 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:45,422 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:45,999 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:46,535 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:47,067 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:47,575 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:47,575 ERROR Failed to send broadcast to 8012086249: Forbidden: bot was blocked by the user
+2025-11-10 19:29:47,575 WARNING User 8012086249 blocked the bot. Consider removing them.
+2025-11-10 19:29:48,004 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:48,529 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:49,085 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:49,628 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:50,229 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:50,550 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:50,550 ERROR Failed to send broadcast to 7532720510: Forbidden: user is deactivated
+2025-11-10 19:29:50,949 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:50,949 ERROR Failed to send broadcast to 7830892300: Forbidden: bot was blocked by the user
+2025-11-10 19:29:50,949 WARNING User 7830892300 blocked the bot. Consider removing them.
+2025-11-10 19:29:51,393 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:51,930 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:52,473 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:52,983 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:52,983 ERROR Failed to send broadcast to 6387889915: Forbidden: bot was blocked by the user
+2025-11-10 19:29:52,983 WARNING User 6387889915 blocked the bot. Consider removing them.
+2025-11-10 19:29:53,422 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:53,953 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:54,462 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:29:54,462 ERROR Failed to send broadcast to 7358931389: Forbidden: bot was blocked by the user
+2025-11-10 19:29:54,462 WARNING User 7358931389 blocked the bot. Consider removing them.
+2025-11-10 19:29:54,900 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:55,416 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:55,973 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:56,513 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:57,055 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:57,611 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:58,156 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:58,690 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:59,221 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:29:59,760 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:00,307 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:00,847 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:01,429 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:01,973 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:02,532 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:03,080 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:03,623 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:04,340 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:04,889 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:30:04,889 ERROR Failed to send broadcast to 5770861704: Forbidden: bot was blocked by the user
+2025-11-10 19:30:04,889 WARNING User 5770861704 blocked the bot. Consider removing them.
+2025-11-10 19:30:05,307 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:05,848 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:06,412 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:06,948 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:07,486 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:08,014 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:08,555 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:09,108 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:09,658 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:10,192 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:10,736 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:11,048 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:30:11,048 ERROR Failed to send broadcast to 7980915544: Forbidden: user is deactivated
+2025-11-10 19:30:11,532 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:12,064 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:12,621 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:13,163 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:13,705 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:14,246 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:14,789 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:15,561 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:30:15,563 ERROR Failed to send broadcast to 8417836611: Forbidden: bot was blocked by the user
+2025-11-10 19:30:15,563 WARNING User 8417836611 blocked the bot. Consider removing them.
+2025-11-10 19:30:15,990 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:16,523 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:17,061 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:17,601 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:18,237 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:18,773 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:19,315 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:19,853 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:20,379 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:30:20,379 ERROR Failed to send broadcast to 7169145385: Forbidden: bot was blocked by the user
+2025-11-10 19:30:20,381 WARNING User 7169145385 blocked the bot. Consider removing them.
+2025-11-10 19:30:20,803 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:21,342 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:21,902 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:22,450 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:22,991 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:23,531 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:24,055 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:24,610 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:25,143 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:25,687 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:26,209 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:30:26,210 ERROR Failed to send broadcast to 7174842480: Forbidden: bot was blocked by the user
+2025-11-10 19:30:26,211 WARNING User 7174842480 blocked the bot. Consider removing them.
+2025-11-10 19:30:26,620 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:30:26,622 ERROR Failed to send broadcast to 7311894499: Forbidden: bot was blocked by the user
+2025-11-10 19:30:26,622 WARNING User 7311894499 blocked the bot. Consider removing them.
+2025-11-10 19:30:27,076 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:27,603 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:28,125 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:29,922 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:30,451 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 403 Forbidden"
+2025-11-10 19:30:30,451 ERROR Failed to send broadcast to 6890321058: Forbidden: bot was blocked by the user
+2025-11-10 19:30:30,452 WARNING User 6890321058 blocked the bot. Consider removing them.
+2025-11-10 19:30:30,906 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:31,468 INFO HTTP Request: POST https://api.telegram.org/bot7811577720:AAGNoS9KEaziHpllsdYu1v2pGqQU7TVqJGE/sendMessage "HTTP/1.1 200 OK"
+2025-11-10 19:30:31,582 INFO 
+--- Broadcast Complete! ---
+\u2705 Sent successfully to 174 users.
+\u274c Failed to send to 30 users.
+Total users: 204
+Duration: 110.15 seconds
+
