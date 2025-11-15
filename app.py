@@ -2328,12 +2328,14 @@ async def main():
     try:
         load_config()
     except Exception as e:
+        print(f"CRITICAL: Could not load config. {e}") # <-- ADDED PRINT
         logging.critical(f"CRITICAL: Could not load config. {e}")
         return
         
     try:
         manager_instance = IvaSmsManager()
     except Exception as e:
+        print(f"CRITICAL: Failed to initialize SeleniumBase driver: {e}") # <-- ADDED PRINT
         logging.critical(f"CRITICAL: Failed to initialize SeleniumBase driver: {e}")
         return
 
