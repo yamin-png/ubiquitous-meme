@@ -3,7 +3,7 @@ import json
 import time
 import asyncio
 import threading
-import aiohttp  # <-- Kept this import for log_sms_to_d1
+import aiohttp
 from datetime import datetime
 from bs4 import BeautifulSoup
 from seleniumbase import Driver
@@ -2335,7 +2335,7 @@ async def main():
     try:
         manager_instance = IvaSmsManager()
     except Exception as e:
-        print(f"CRITICAL: Failed to initialize SeleniumBase driver: {e}") # <-- ADDED PRINT
+        print(f"CRICAL: Failed to initialize SeleniumBase driver: {e}") # <-- ADDED PRINT
         logging.critical(f"CRITICAL: Failed to initialize SeleniumBase driver: {e}")
         return
 
