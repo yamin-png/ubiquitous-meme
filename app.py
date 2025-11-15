@@ -924,9 +924,8 @@ class IvaSmsManager:
                 # Add a persistent user_data_dir for the SMS driver
                 driver = Driver(
                     uc=True, 
-                    headless=True,
-                    user_data_dir=data_dir, # Use the robust, absolute path
-                    args=["--no-sandbox", "--disable-dev-shm-usage"] # <-- CHANGED 'driver_args' to 'args'
+                    headless2=True, # <-- USE headless2 (replaces headless=True and args)
+                    user_data_dir=data_dir # Use the robust, absolute path
                 )
                 logging.info(f"✅ Created SeleniumBase driver with persistent session at {data_dir}")
                 return driver
@@ -2336,7 +2335,7 @@ async def main():
     try:
         manager_instance = IvaSmsManager()
     except Exception as e:
-        print(f"CRICAL: Failed to initialize SeleniumBase driver: {e}") # <-- ADDED PRINT
+        print(f"CRITICAL: Failed to initialize SeleniumBase driver: {e}") # <-- Fixed typo
         logging.critical(f"CRITICAL: Failed to initialize SeleniumBase driver: {e}")
         return
 
