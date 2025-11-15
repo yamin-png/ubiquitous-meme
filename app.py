@@ -1800,7 +1800,7 @@ async def handle_withdrawal_request(update: Update, context: ContextTypes.DEFAUL
         f"<b>🔥 New Withdrawal Request!</b>\n\n"
         f"<b>User:</b> {html_escape(user_data['first_name'])}\n"
         f"<b>Username:</b> {username}\n"
-        f"<b>ID:</b> f"<code>{user_id}</code>\n"
+        f"<b>ID:</b> <code>{user_id}</code>\n"
         f"<b>Amount:</b> ৳{amount_to_withdraw:.2f}\n"
         f"<b>Method:</b> {payment_method}\n"
         f"<b>Payment Info:</b> <code>{payment_info}</code>"
