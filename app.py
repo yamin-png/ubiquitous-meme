@@ -3,36 +3,29 @@ import json
 import time
 import asyncio
 import threading
-import aiohttp
+import aiohttp  # <-- Kept this import for log_sms_to_d1
 from datetime import datetime
 from bs4 import BeautifulSoup
 from seleniumbase import Driver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options as ChromeOptions # <--- FIXED: Import needed for setting Chrome options
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton, ReplyKeyboardMarkup, error
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackQueryHandler, ContextTypes
 from telegram.constants import ParseMode
 
-# import logging <-- REMOVED standard logging import (All output goes to print())
+import logging
 import re
 import configparser
 
-# Global log file status flag (All logs go to terminal now)
-LOGGING_ENABLED = False 
-
-def log_output(level, message):
-    """Custom log function to print everything to the terminal."""
-    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{timestamp}] {level}: {message}")
+# SeleniumBase will handle Cloudflare bypass automatically
 
 CONFIG_FILE = 'config.txt'
 
 def load_config():
     """Load configuration from config.txt."""
     if not os.path.exists(CONFIG_FILE):
-        log_output("CRITICAL", f"{CONFIG_FILE} not found!") # <--- FIXED: Use custom log function
+        logging.critical(f"{CONFIG_FILE} not found!")
         raise FileNotFoundError(f"{CONFIG_FILE} not found!")
         
     config = configparser.ConfigParser()
@@ -560,823 +553,86 @@ COUNTRY_FLAGS = {
     'NORTHERN MARIANA ISLANDS': '🇲🇵 Northern Mariana Islands',
     'NORWAY': '🇳🇴 Norway',
     'OMAN': '🇴🇲 Oman',
-    '+92': 'PAKISTAN',
-    '+680': 'PALAU',
-    '+970': 'PALESTINIAN TERRITORY, OCCUPIED',
-    '+507': 'PANAMA',
-    '+675': 'PAPUA NEW GUINEA',
-    '+595': 'PARAGUAY',
-    '+51': 'PERU',
-    '+63': 'PHILIPPINES',
-    '+870': 'PITCAIRN',
-    '+48': 'POLAND',
-    '+351': 'PORTUGAL',
-    '+1': 'PUERTO RICO',
-    '+974': 'QATAR',
-    '+262': 'REUNION',
-    '+40': 'ROMANIA',
-    '+7': 'RUSSIAN FEDERATION',
-    '+250': 'RWANDA',
-    '+590': 'SAINT BARTHELEMY',
-    '+290': 'SAINT HELENA',
-    '+1869': 'SAINT KITTS AND NEVIS',
-    '+1758': 'SAINT LUCIA',
-    '+590': 'SAINT MARTIN',
-    '+508': 'SAINT PIERRE AND MIQUELON',
-    '+1784': 'SAINT VINCENT AND THE GRENADINES',
-    '+685': 'SAMOA',
-    '+378': 'SAN MARINO',
-    '+239': 'SAO TOME AND PRINCIPE',
-    '+966': 'SAUDI ARABIA',
-    '+221': 'SENEGAL',
-    '+381': 'SERBIA',
-    '+248': 'SEYCHELLES',
-    '+232': 'SIERRA LEONE',
-    '+65': 'SINGAPORE',
-    '+421': 'SLOVAKIA',
-    '+386': 'SLOVENIA',
-    '+677': 'SOLOMON ISLANDS',
-    '+252': 'SOMALIA',
-    '+27': 'SOUTH AFRICA',
-    '+500': 'SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS',
-    '+34': 'SPAIN',
-    '+94': 'SRI LANKA',
-    '+249': 'SUDAN',
-    '+597': 'SURINAME',
-    '+47': 'SVALBARD AND JAN MAYEN',
-    '+268': 'SWAZILAND',
-    '+46': 'SWEDEN',
-    '+41': 'SWITZERLAND',
-    '+963': 'SYRIAN ARAB REPUBLIC',
-    '+886': 'TAIWAN, PROVINCE OF CHINA',
-    '+992': 'TAJIKISTAN',
-    '+255': 'TANZANIA, UNITED REPUBLIC OF',
-    '+66': 'THAILAND',
-    '+670': 'TIMOR-LESTE',
-    '+228': 'TOGO',
-    '+690': 'TOKELAU',
-    '+676': 'TONGA',
-    '+1868': 'TRINIDAD AND TOBAGO',
-    '+216': 'TUNISIA',
-    '+90': 'TURKEY',
-    '+993': 'TURKMENISTAN',
-    '+1649': 'TURKS AND CAICOS ISLANDS',
-    '+688': 'TUVALU',
-    '+256': 'UGANDA',
-    '+380': 'UKRAINE',
-    '+971': 'UNITED ARAB EMIRATES',
-    '+44': 'UNITED KINGDOM',
-    '+1': 'UNITED STATES',
-    '+598': 'URUGUAY',
-    '+998': 'UZBEKISTAN',
-    '+678': 'VANUATU',
-    '+58': 'VENEZUELA',
-    '+84': 'VIET NAM',
-    '+1284': 'VIRGIN ISLANDS, BRITISH',
-    '+1340': 'VIRGIN ISLANDS, U.S.',
-    '+681': 'WALLIS AND FUTUNA',
-    '+212': 'WESTERN SAHARA',
-    '+967': 'YEMEN',
-    '+260': 'ZAMBIA',
-    '+263': 'ZIMBABWE'
-}
-
-# Country name mapping with flags for display
-COUNTRY_FLAGS = {
-    'AFGHANISTAN': '🇦🇫 Afghanistan',
-    'ALBANIA': '🇦🇱 Albania',
-    'ALGERIA': '🇩🇿 Algeria',
-    'AMERICAN SAMOA': '🇦🇸 American Samoa',
-    'ANDORRA': '🇦🇩 Andorra',
-    'ANGOLA': '🇦🇴 Angola',
-    'ANGUILLA': '🇦🇮 Anguilla',
-    'ANTARCTICA': '🇦🇶 Antarctica',
-    'ANTIGUA AND BARBUDA': '🇦🇬 Antigua and Barbuda',
-    'ARGENTINA': '🇦🇷 Argentina',
-    'ARMENIA': '🇦🇲 Armenia',
-    'ARUBA': '🇦🇼 Aruba',
-    'AUSTRALIA': '🇦🇺 Australia',
-    'AUSTRIA': '🇦🇹 Austria',
-    'AZERBAIJAN': '🇦🇿 Azerbaijan',
-    'BAHAMAS': '🇧🇸 Bahamas',
-    'BAHRAIN': '🇧🇭 Bahrain',
-    'BANGLADESH': '🇧🇩 Bangladesh',
-    'BARBADOS': '🇧🇧 Barbados',
-    'BELARUS': '🇧🇾 Belarus',
-    'BELGIUM': '🇧🇪 Belgium',
-    'BELIZE': '🇧🇿 Belize',
-    'BENIN': '🇧🇯 Benin',
-    'BERMUDA': '🇧🇲 Bermuda',
-    'BHUTAN': '🇧🇹 Bhutan',
-    'BOLIVIA': '🇧🇴 Bolivia',
-    'BOSNIA AND HERZEGOVINA': '🇧🇦 Bosnia and Herzegovina',
-    'BOTSWANA': '🇧🇼 Botswana',
-    'BRAZIL': '🇧🇷 Brazil',
-    'BRITISH INDIAN OCEAN TERRITORY': '🇮🇴 British Indian Ocean Territory',
-    'BRUNEI DARUSSALAM': '🇧🇳 Brunei Darussalam',
-    'BULGARIA': '🇧🇬 Bulgaria',
-    'BURKINA FASO': '🇧🇫 Burkina Faso',
-    'BURUNDI': '🇧🇮 Burundi',
-    'CAMBODIA': '🇰🇭 Cambodia',
-    'CAMEROON': '🇨🇲 Cameroon',
-    'CANADA': '🇨🇦 Canada',
-    'CAPE VERDE': '🇨🇻 Cape Verde',
-    'CAYMAN ISLANDS': '🇰🇾 Cayman Islands',
-    'CENTRAL AFRICAN REPUBLIC': '🇨🇫 Central African Republic',
-    'CHAD': '🇹🇩 Chad',
-    'CHILE': '🇨🇱 Chile',
-    'CHINA': '🇨🇳 China',
-    'CHRISTMAS ISLAND': '🇨🇽 Christmas Island',
-    'COCOS (KEELING) ISLANDS': '🇨🇨 Cocos (Keeling) Islands',
-    'COLOMBIA': '🇨🇴 Colombia',
-    'COMOROS': '🇰🇲 Comoros',
-    'CONGO': '🇨🇬 Congo',
-    'CONGO, THE DEMOCRATIC REPUBLIC OF THE': '🇨🇩 Congo, The Democratic Republic of the',
-    'COOK ISLANDS': '🇨🇰 Cook Islands',
-    'COSTA RICA': '🇨🇷 Costa Rica',
-    'COTE DIVOIRE': '🇨🇮 Cote D\'Ivoire',
-    'CROATIA': '🇭🇷 Croatia',
-    'CUBA': '🇨🇺 Cuba',
-    'CYPRUS': '🇨🇾 Cyprus',
-    'CZECH REPUBLIC': '🇨🇿 Czech Republic',
-    'DENMARK': '🇩🇰 Denmark',
-    'DJIBOUTI': '🇩🇯 Djibouti',
-    'DOMINICA': '🇩🇲 Dominica',
-    'DOMINICAN REPUBLIC': '🇩🇴 Dominican Republic',
-    'ECUADOR': '🇪🇨 Ecuador',
-    'EGYPT': '🇪🇬 Egypt',
-    'EL SALVADOR': '🇸🇻 El Salvador',
-    'EQUATORIAL GUINEA': '🇬🇶 Equatorial Guinea',
-    'ERITREA': '🇪🇷 Eritrea',
-    'ESTONIA': '🇪🇪 Estonia',
-    'ETHIOPIA': '🇪🇹 Ethiopia',
-    'FALKLAND ISLANDS (MALVINAS)': '🇫🇰 Falkland Islands (Malvinas)',
-    'FAROE ISLANDS': '🇫🇴 Faroe Islands',
-    'FIJI': '🇫🇯 Fiji',
-    'FINLAND': '🇫🇮 Finland',
-    'FRANCE': '🇫🇷 France',
-    'FRENCH GUIANA': '🇬🇫 French Guiana',
-    'FRENCH POLYNESIA': '🇵🇫 French Polynesia',
-    'FRENCH SOUTHERN TERRITORIES': '🇹🇫 French Southern Territories',
-    'GABON': '🇬🇦 Gabon',
-    'GAMBIA': '🇬🇲 Gambia',
-    'GEORGIA': '🇬🇪 Georgia',
-    'GERMANY': '🇩🇪 Germany',
-    'GHANA': '🇬🇭 Ghana',
-    'GIBRALTAR': '🇬🇮 Gibraltar',
-    'GREECE': '🇬🇷 Greece',
-    'GREENLAND': '🇬🇱 Greenland',
-    'GRENADA': '🇬🇩 Grenada',
-    'GUADELOUPE': '🇬🇵 Guadeloupe',
-    'GUAM': '🇬🇺 Guam',
-    'GUATEMALA': '🇬🇹 Guatemala',
-    'GUERNSEY': '🇬🇬 Guernsey',
-    'GUINEA': '🇬🇳 Guinea',
-    'GUINEA-BISSAU': '🇬🇼 Guinea-Bissau',
-    'GUYANA': '🇬🇾 Guyana',
-    'HAITI': '🇭🇹 Haiti',
-    'HOLY SEE (VATICAN CITY STATE)': '🇻🇦 Holy See (Vatican City State)',
-    'HONDURAS': '🇭🇳 Honduras',
-    'HONG KONG': '🇭🇰 Hong Kong',
-    'HUNGARY': '🇭🇺 Hungary',
-    'ICELAND': '🇮🇸 Iceland',
-    'INDIA': '🇮🇳 India',
-    'INDONESIA': '🇮🇩 Indonesia',
-    'IRAN, ISLAMIC REPUBLIC OF': '🇮🇷 Iran, Islamic Republic of',
-    'IRAQ': '🇮🇶 Iraq',
-    'IRELAND': '🇮🇪 Ireland',
-    'ISLE OF MAN': '🇮🇲 Isle of Man',
-    'ISRAEL': '🇮🇱 Israel',
-    'ITALY': '🇮🇹 Italy',
-    'JAMAICA': '🇯🇲 Jamaica',
-    'JAPAN': '🇯🇵 Japan',
-    'JERSEY': '🇯🇪 Jersey',
-    'JORDAN': '🇯🇴 Jordan',
-    'KAZAKHSTAN': '🇰🇿 Kazakhstan',
-    'KENYA': '🇰🇪 Kenya',
-    'KIRIBATI': '🇰🇮 Kiribati',
-    'KOREA, DEMOCRATIC PEOPLES REPUBLIC OF': '🇰🇵 Korea, Democratic People\'s Republic of',
-    'KOREA, REPUBLIC OF': '🇰🇷 Korea, Republic of',
-    'KUWAIT': '🇰🇼 Kuwait',
-    'KYRGYZSTAN': '🇰🇬 Kyrgyzstan',
-    'LAO PEOPLES DEMOCRATIC REPUBLIC': '🇱🇦 Lao People\'s Democratic Republic',
-    'LATVIA': '🇱🇻 Latvia',
-    'LEBANON': '🇱🇧 Lebanon',
-    'LESOTHO': '🇱🇸 Lesotho',
-    'LIBERIA': '🇱🇷 Liberia',
-    'LIBYAN ARAB JAMAHIRIYA': '🇱🇾 Libyan Arab Jamahiriya',
-    'LIECHTENSTEIN': '🇱🇮 Liechtenstein',
-    'LITHUANIA': '🇱🇹 Lithuania',
-    'LUXEMBOURG': '🇱🇺 Luxembourg',
-    'MACAO': '🇲🇴 Macao',
-    'MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF': '🇲🇰 Macedonia, The Former Yugoslav Republic of',
-    'MADAGASCAR': '🇲🇬 Madagascar',
-    'MALAWI': '🇲🇼 Malawi',
-    'MALAYSIA': '🇲🇾 Malaysia',
-    'MALDIVES': '🇲🇻 Maldives',
-    'MALI': '🇲🇱 Mali',
-    'MALTA': '🇲🇹 Malta',
-    'MARSHALL ISLANDS': '🇲🇭 Marshall Islands',
-    'MARTINIQUE': '🇲🇶 Martinique',
-    'MAURITANIA': '🇲🇷 Mauritania',
-    'MAURITIUS': '🇲🇺 Mauritius',
-    'MAYOTTE': '🇾🇹 Mayotte',
-    'MEXICO': '🇲🇽 Mexico',
-    'MICRONESIA, FEDERATED STATES OF': '🇫🇲 Micronesia, Federated States of',
-    'MOLDOVA, REPUBLIC OF': '🇲🇩 Moldova, Republic of',
-    'MONACO': '🇲🇨 Monaco',
-    'MONGOLIA': '🇲🇳 Mongolia',
-    'MONTENEGRO': '🇲🇪 Montenegro',
-    'MONTSERRAT': '🇲🇸 Montserrat',
-    'MOROCCO': '🇲🇦 Morocco',
-    'MOZAMBIQUE': '🇲🇿 Mozambique',
-    'MYANMAR': '🇲🇲 Myanmar',
-    'NAMIBIA': '🇳🇦 Namibia',
-    'NAURU': '🇳🇷 Nauru',
-    'NEPAL': '🇳🇵 Nepal',
-    'NETHERLANDS': '🇳🇱 Netherlands',
-    'NETHERLANDS ANTILLES': '🇦🇳 Netherlands Antilles',
-    'NEW CALEDONIA': '🇳🇨 New Caledonia',
-    'NEW ZEALAND': '🇳🇿 New Zealand',
-    '+505': 'NICARAGUA',
-    '+227': 'NIGER',
-    '+234': 'NIGERIA',
-    '+683': 'NIUE',
-    '+672': 'NORFOLK ISLAND',
-    '+1670': 'NORTHERN MARIANA ISLANDS',
-    '+47': 'NORWAY',
-    '+968': 'OMAN',
-    '+92': 'PAKISTAN',
-    '+680': 'PALAU',
-    '+970': 'PALESTINIAN TERRITORY, OCCUPIED',
-    '+507': 'PANAMA',
-    '+675': 'PAPUA NEW GUINEA',
-    '+595': 'PARAGUAY',
-    '+51': 'PERU',
-    '+63': 'PHILIPPINES',
-    '+870': 'PITCAIRN',
-    '+48': 'POLAND',
-    '+351': 'PORTUGAL',
-    '+1': 'PUERTO RICO',
-    '+974': 'QATAR',
-    '+262': 'REUNION',
-    '+40': 'ROMANIA',
-    '+7': 'RUSSIAN FEDERATION',
-    '+250': 'RWANDA',
-    '+590': 'SAINT BARTHELEMY',
-    '+290': 'SAINT HELENA',
-    '+1869': 'SAINT KITTS AND NEVIS',
-    '+1758': 'SAINT LUCIA',
-    '+590': 'SAINT MARTIN',
-    '+508': 'SAINT PIERRE AND MIQUELON',
-    '+1784': 'SAINT VINCENT AND THE GRENADINES',
-    '+685': 'SAMOA',
-    '+378': 'SAN MARINO',
-    '+239': 'SAO TOME AND PRINCIPE',
-    '+966': 'SAUDI ARABIA',
-    '+221': 'SENEGAL',
-    '+381': 'SERBIA',
-    '+248': 'SEYCHELLES',
-    '+232': 'SIERRA LEONE',
-    '+65': 'SINGAPORE',
-    '+421': 'SLOVAKIA',
-    '+386': 'SLOVENIA',
-    '+677': 'SOLOMON ISLANDS',
-    '+252': 'SOMALIA',
-    '+27': 'SOUTH AFRICA',
-    '+500': 'SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS',
-    '+34': 'SPAIN',
-    '+94': 'SRI LANKA',
-    '+249': 'SUDAN',
-    '+597': 'SURINAME',
-    '+47': 'SVALBARD AND JAN MAYEN',
-    '+268': 'SWAZILAND',
-    '+46': 'SWEDEN',
-    '+41': 'SWITZERLAND',
-    '+963': 'SYRIAN ARAB REPUBLIC',
-    '+886': 'TAIWAN, PROVINCE OF CHINA',
-    '+992': 'TAJIKISTAN',
-    '+255': 'TANZANIA, UNITED REPUBLIC OF',
-    '+66': 'THAILAND',
-    '+670': 'TIMOR-LESTE',
-    '+228': 'TOGO',
-    '+690': 'TOKELAU',
-    '+676': 'TONGA',
-    '+1868': 'TRINIDAD AND TOBAGO',
-    '+216': 'TUNISIA',
-    '+90': 'TURKEY',
-    '+993': 'TURKMENISTAN',
-    '+1649': 'TURKS AND CAICOS ISLANDS',
-    '+688': 'TUVALU',
-    '+256': 'UGANDA',
-    '+380': 'UKRAINE',
-    '+971': 'UNITED ARAB EMIRATES',
-    '+44': 'UNITED KINGDOM',
-    '+1': 'UNITED STATES',
-    '+598': 'URUGUAY',
-    '+998': 'UZBEKISTAN',
-    '+678': 'VANUATU',
-    '+58': 'VENEZUELA',
-    '+84': 'VIET NAM',
-    '+1284': 'VIRGIN ISLANDS, BRITISH',
-    '+1340': 'VIRGIN ISLANDS, U.S.',
-    '+681': 'WALLIS AND FUTUNA',
-    '+212': 'WESTERN SAHARA',
-    '+967': 'YEMEN',
-    '+260': 'ZAMBIA',
-    '+263': 'ZIMBABWE'
-}
-
-# Country name mapping with flags for display
-COUNTRY_FLAGS = {
-    'AFGHANISTAN': '🇦🇫 Afghanistan',
-    'ALBANIA': '🇦🇱 Albania',
-    'ALGERIA': '🇩🇿 Algeria',
-    'AMERICAN SAMOA': '🇦🇸 American Samoa',
-    'ANDORRA': '🇦🇩 Andorra',
-    'ANGOLA': '🇦🇴 Angola',
-    'ANGUILLA': '🇦🇮 Anguilla',
-    'ANTARCTICA': '🇦🇶 Antarctica',
-    'ANTIGUA AND BARBUDA': '🇦🇬 Antigua and Barbuda',
-    'ARGENTINA': '🇦🇷 Argentina',
-    'ARMENIA': '🇦🇲 Armenia',
-    'ARUBA': '🇦🇼 Aruba',
-    'AUSTRALIA': '🇦🇺 Australia',
-    'AUSTRIA': '🇦🇹 Austria',
-    'AZERBAIJAN': '🇦🇿 Azerbaijan',
-    'BAHAMAS': '🇧🇸 Bahamas',
-    'BAHRAIN': '🇧🇭 Bahrain',
-    'BANGLADESH': '🇧🇩 Bangladesh',
-    'BARBADOS': '🇧🇧 Barbados',
-    'BELARUS': '🇧🇾 Belarus',
-    'BELGIUM': '🇧🇪 Belgium',
-    'BELIZE': '🇧🇿 Belize',
-    'BENIN': '🇧🇯 Benin',
-    'BERMUDA': '🇧🇲 Bermuda',
-    'BHUTAN': '🇧🇹 Bhutan',
-    'BOLIVIA': '🇧🇴 Bolivia',
-    'BOSNIA AND HERZEGOVINA': '🇧🇦 Bosnia and Herzegovina',
-    'BOTSWANA': '🇧🇼 Botswana',
-    'BRAZIL': '🇧🇷 Brazil',
-    'BRITISH INDIAN OCEAN TERRITORY': '🇮🇴 British Indian Ocean Territory',
-    'BRUNEI DARUSSALAM': '🇧🇳 Brunei Darussalam',
-    'BULGARIA': '🇧🇬 Bulgaria',
-    'BURKINA FASO': '🇧🇫 Burkina Faso',
-    'BURUNDI': '🇧🇮 Burundi',
-    'CAMBODIA': '🇰🇭 Cambodia',
-    'CAMEROON': '🇨🇲 Cameroon',
-    'CANADA': '🇨🇦 Canada',
-    'CAPE VERDE': '🇨🇻 Cape Verde',
-    'CAYMAN ISLANDS': '🇰🇾 Cayman Islands',
-    'CENTRAL AFRICAN REPUBLIC': '🇨🇫 Central African Republic',
-    'CHAD': '🇹🇩 Chad',
-    'CHILE': '🇨🇱 Chile',
-    'CHINA': '🇨🇳 China',
-    'CHRISTMAS ISLAND': '🇨🇽 Christmas Island',
-    'COCOS (KEELING) ISLANDS': '🇨🇨 Cocos (Keeling) Islands',
-    'COLOMBIA': '🇨🇴 Colombia',
-    'COMOROS': '🇰🇲 Comoros',
-    'CONGO': '🇨🇬 Congo',
-    'CONGO, THE DEMOCRATIC REPUBLIC OF THE': '🇨🇩 Congo, The Democratic Republic of the',
-    'COOK ISLANDS': '🇨🇰 Cook Islands',
-    'COSTA RICA': '🇨🇷 Costa Rica',
-    'COTE DIVOIRE': '🇨🇮 Cote D\'Ivoire',
-    'CROATIA': '🇭🇷 Croatia',
-    'CUBA': '🇨🇺 Cuba',
-    'CYPRUS': '🇨🇾 Cyprus',
-    'CZECH REPUBLIC': '🇨🇿 Czech Republic',
-    'DENMARK': '🇩🇰 Denmark',
-    'DJIBOUTI': '🇩🇯 Djibouti',
-    'DOMINICA': '🇩🇲 Dominica',
-    'DOMINICAN REPUBLIC': '🇩🇴 Dominican Republic',
-    'ECUADOR': '🇪🇨 Ecuador',
-    'EGYPT': '🇪🇬 Egypt',
-    'EL SALVADOR': '🇸🇻 El Salvador',
-    'EQUATORIAL GUINEA': '🇬🇶 Equatorial Guinea',
-    'ERITREA': '🇪🇷 Eritrea',
-    'ESTONIA': '🇪🇪 Estonia',
-    'ETHIOPIA': '🇪🇹 Ethiopia',
-    'FALKLAND ISLANDS (MALVINAS)': '🇫🇰 Falkland Islands (Malvinas)',
-    'FAROE ISLANDS': '🇫🇴 Faroe Islands',
-    'FIJI': '🇫🇯 Fiji',
-    'FINLAND': '🇫🇮 Finland',
-    'FRANCE': '🇫🇷 France',
-    'FRENCH GUIANA': '🇬🇫 French Guiana',
-    'FRENCH POLYNESIA': '🇵🇫 French Polynesia',
-    'FRENCH SOUTHERN TERRITORIES': '🇹🇫 French Southern Territories',
-    'GABON': '🇬🇦 Gabon',
-    'GAMBIA': '🇬🇲 Gambia',
-    'GEORGIA': '🇬🇪 Georgia',
-    'GERMANY': '🇩🇪 Germany',
-    'GHANA': '🇬🇭 Ghana',
-    'GIBRALTAR': '🇬🇮 Gibraltar',
-    'GREECE': '🇬🇷 Greece',
-    'GREENLAND': '🇬🇱 Greenland',
-    'GRENADA': '🇬🇩 Grenada',
-    'GUADELOUPE': '🇬🇵 Guadeloupe',
-    'GUAM': '🇬🇺 Guam',
-    'GUATEMALA': '🇬🇹 Guatemala',
-    'GUERNSEY': '🇬🇬 Guernsey',
-    'GUINEA': '🇬🇳 Guinea',
-    'GUINEA-BISSAU': '🇬🇼 Guinea-Bissau',
-    'GUYANA': '🇬🇾 Guyana',
-    'HAITI': '🇭🇹 Haiti',
-    'HOLY SEE (VATICAN CITY STATE)': '🇻🇦 Holy See (Vatican City State)',
-    'HONDURAS': '🇭🇳 Honduras',
-    'HONG KONG': '🇭🇰 Hong Kong',
-    'HUNGARY': '🇭🇺 Hungary',
-    'ICELAND': '🇮🇸 Iceland',
-    'INDIA': '🇮🇳 India',
-    'INDONESIA': '🇮🇩 Indonesia',
-    'IRAN, ISLAMIC REPUBLIC OF': '🇮🇷 Iran, Islamic Republic of',
-    'IRAQ': '🇮🇶 Iraq',
-    'IRELAND': '🇮🇪 Ireland',
-    'ISLE OF MAN': '🇮🇲 Isle of Man',
-    'ISRAEL': '🇮🇱 Israel',
-    'ITALY': '🇮🇹 Italy',
-    'JAMAICA': '🇯🇲 Jamaica',
-    'JAPAN': '🇯🇵 Japan',
-    'JERSEY': '🇯🇪 Jersey',
-    'JORDAN': '🇯🇴 Jordan',
-    'KAZAKHSTAN': '🇰🇿 Kazakhstan',
-    'KENYA': '🇰🇪 Kenya',
-    'KIRIBATI': '🇰🇮 Kiribati',
-    'KOREA, DEMOCRATIC PEOPLES REPUBLIC OF': '🇰🇵 Korea, Democratic People\'s Republic of',
-    'KOREA, REPUBLIC OF': '🇰🇷 Korea, Republic of',
-    'KUWAIT': '🇰🇼 Kuwait',
-    'KYRGYZSTAN': '🇰🇬 Kyrgyzstan',
-    'LAO PEOPLES DEMOCRATIC REPUBLIC': '🇱🇦 Lao People\'s Democratic Republic',
-    'LATVIA': '🇱🇻 Latvia',
-    'LEBANON': '🇱🇧 Lebanon',
-    'LESOTHO': '🇱🇸 Lesotho',
-    'LIBERIA': '🇱🇷 Liberia',
-    'LIBYAN ARAB JAMAHIRIYA': '🇱🇾 Libyan Arab Jamahiriya',
-    'LIECHTENSTEIN': '🇱🇮 Liechtenstein',
-    'LITHUANIA': '🇱🇹 Lithuania',
-    'LUXEMBOURG': '🇱🇺 Luxembourg',
-    'MACAO': '🇲🇴 Macao',
-    'MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF': '🇲🇰 Macedonia, The Former Yugoslav Republic of',
-    'MADAGASCAR': '🇲🇬 Madagascar',
-    'MALAWI': '🇲🇼 Malawi',
-    'MALAYSIA': '🇲🇾 Malaysia',
-    'MALDIVES': '🇲🇻 Maldives',
-    'MALI': '🇲🇱 Mali',
-    'MALTA': '🇲🇹 Malta',
-    'MARSHALL ISLANDS': '🇲🇭 Marshall Islands',
-    'MARTINIQUE': '🇲🇶 Martinique',
-    'MAURITANIA': '🇲🇷 Mauritania',
-    'MAURITIUS': '🇲🇺 Mauritius',
-    'MAYOTTE': '🇾🇹 Mayotte',
-    'MEXICO': '🇲🇽 Mexico',
-    'MICRONESIA, FEDERATED STATES OF': '🇫🇲 Micronesia, Federated States of',
-    'MOLDOVA, REPUBLIC OF': '🇲🇩 Moldova, Republic of',
-    'MONACO': '🇲🇨 Monaco',
-    'MONGOLIA': '🇲🇳 Mongolia',
-    'MONTENEGRO': '🇲🇪 Montenegro',
-    'MONTSERRAT': '🇲🇸 Montserrat',
-    'MOROCCO': '🇲🇦 Morocco',
-    'MOZAMBIQUE': '🇲🇿 Mozambique',
-    'MYANMAR': '🇲🇲 Myanmar',
-    'NAMIBIA': '🇳🇦 Namibia',
-    'NAURU': '🇳🇷 Nauru',
-    'NEPAL': '🇳🇵 Nepal',
-    'NETHERLANDS': '🇳🇱 Netherlands',
-    'NETHERLANDS ANTILLES': '🇦🇳 Netherlands Antilles',
-    'NEW CALEDONIA': '🇳🇨 New Caledonia',
-    'NEW ZEALAND': '🇳🇿 New Zealand',
-    '+505': 'NICARAGUA',
-    '+227': 'NIGER',
-    '+234': 'NIGERIA',
-    '+683': 'NIUE',
-    '+672': 'NORFOLK ISLAND',
-    '+1670': 'NORTHERN MARIANA ISLANDS',
-    '+47': 'NORWAY',
-    '+968': 'OMAN',
-    '+92': 'PAKISTAN',
-    '+680': 'PALAU',
-    '+970': 'PALESTINIAN TERRITORY, OCCUPIED',
-    '+507': 'PANAMA',
-    '+675': 'PAPUA NEW GUINEA',
-    '+595': 'PARAGUAY',
-    '+51': 'PERU',
-    '+63': 'PHILIPPINES',
-    '+870': 'PITCAIRN',
-    '+48': 'POLAND',
-    '+351': 'PORTUGAL',
-    '+1': 'PUERTO RICO',
-    '+974': 'QATAR',
-    '+262': 'REUNION',
-    '+40': 'ROMANIA',
-    '+7': 'RUSSIAN FEDERATION',
-    '+250': 'RWANDA',
-    '+590': 'SAINT BARTHELEMY',
-    '+290': 'SAINT HELENA',
-    '+1869': 'SAINT KITTS AND NEVIS',
-    '+1758': 'SAINT LUCIA',
-    '+590': 'SAINT MARTIN',
-    '+508': 'SAINT PIERRE AND MIQUELON',
-    '+1784': 'SAINT VINCENT AND THE GRENADINES',
-    '+685': 'SAMOA',
-    '+378': 'SAN MARINO',
-    '+239': 'SAO TOME AND PRINCIPE',
-    '+966': 'SAUDI ARABIA',
-    '+221': 'SENEGAL',
-    '+381': 'SERBIA',
-    '+248': 'SEYCHELLES',
-    '+232': 'SIERRA LEONE',
-    '+65': 'SINGAPORE',
-    '+421': 'SLOVAKIA',
-    '+386': 'SLOVENIA',
-    '+677': 'SOLOMON ISLANDS',
-    '+252': 'SOMALIA',
-    '+27': 'SOUTH AFRICA',
-    '+500': 'SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS',
-    '+34': 'SPAIN',
-    '+94': 'SRI LANKA',
-    '+249': 'SUDAN',
-    '+597': 'SURINAME',
-    '+47': 'SVALBARD AND JAN MAYEN',
-    '+268': 'SWAZILAND',
-    '+46': 'SWEDEN',
-    '+41': 'SWITZERLAND',
-    '+963': 'SYRIAN ARAB REPUBLIC',
-    '+886': 'TAIWAN, PROVINCE OF CHINA',
-    '+992': 'TAJIKISTAN',
-    '+255': 'TANZANIA, UNITED REPUBLIC OF',
-    '+66': 'THAILAND',
-    '+670': 'TIMOR-LESTE',
-    '+228': 'TOGO',
-    '+690': 'TOKELAU',
-    '+676': 'TONGA',
-    '+1868': 'TRINIDAD AND TOBAGO',
-    '+216': 'TUNISIA',
-    '+90': 'TURKEY',
-    '+993': 'TURKMENISTAN',
-    '+1649': 'TURKS AND CAICOS ISLANDS',
-    '+688': 'TUVALU',
-    '+256': 'UGANDA',
-    '+380': 'UKRAINE',
-    '+971': 'UNITED ARAB EMIRATES',
-    '+44': 'UNITED KINGDOM',
-    '+1': 'UNITED STATES',
-    '+598': 'URUGUAY',
-    '+998': 'UZBEKISTAN',
-    '+678': 'VANUATU',
-    '+58': 'VENEZUELA',
-    '+84': 'VIET NAM',
-    '+1284': 'VIRGIN ISLANDS, BRITISH',
-    '+1340': 'VIRGIN ISLANDS, U.S.',
-    '+681': 'WALLIS AND FUTUNA',
-    '+212': 'WESTERN SAHARA',
-    '+967': 'YEMEN',
-    '+260': 'ZAMBIA',
-    '+263': 'ZIMBABWE'
-}
-
-# Country name mapping with flags for display
-COUNTRY_FLAGS = {
-    'AFGHANISTAN': '🇦🇫 Afghanistan',
-    'ALBANIA': '🇦🇱 Albania',
-    'ALGERIA': '🇩🇿 Algeria',
-    'AMERICAN SAMOA': '🇦🇸 American Samoa',
-    'ANDORRA': '🇦🇩 Andorra',
-    'ANGOLA': '🇦🇴 Angola',
-    'ANGUILLA': '🇦🇮 Anguilla',
-    'ANTARCTICA': '🇦🇶 Antarctica',
-    'ANTIGUA AND BARBUDA': '🇦🇬 Antigua and Barbuda',
-    'ARGENTINA': '🇦🇷 Argentina',
-    'ARMENIA': '🇦🇲 Armenia',
-    'ARUBA': '🇦🇼 Aruba',
-    'AUSTRALIA': '🇦🇺 Australia',
-    'AUSTRIA': '🇦🇹 Austria',
-    'AZERBAIJAN': '🇦🇿 Azerbaijan',
-    'BAHAMAS': '🇧🇸 Bahamas',
-    'BAHRAIN': '🇧🇭 Bahrain',
-    'BANGLADESH': '🇧🇩 Bangladesh',
-    'BARBADOS': '🇧🇧 Barbados',
-    'BELARUS': '🇧🇾 Belarus',
-    'BELGIUM': '🇧🇪 Belgium',
-    'BELIZE': '🇧🇿 Belize',
-    'BENIN': '🇧🇯 Benin',
-    'BERMUDA': '🇧🇲 Bermuda',
-    'BHUTAN': '🇧🇹 Bhutan',
-    'BOLIVIA': '🇧🇴 Bolivia',
-    'BOSNIA AND HERZEGOVINA': '🇧🇦 Bosnia and Herzegovina',
-    'BOTSWANA': '🇧🇼 Botswana',
-    'BRAZIL': '🇧🇷 Brazil',
-    'BRITISH INDIAN OCEAN TERRITORY': '🇮🇴 British Indian Ocean Territory',
-    'BRUNEI DARUSSALAM': '🇧🇳 Brunei Darussalam',
-    'BULGARIA': '🇧🇬 Bulgaria',
-    'BURKINA FASO': '🇧🇫 Burkina Faso',
-    'BURUNDI': '🇧🇮 Burundi',
-    'CAMBODIA': '🇰🇭 Cambodia',
-    'CAMEROON': '🇨🇲 Cameroon',
-    'CANADA': '🇨🇦 Canada',
-    'CAPE VERDE': '🇨🇻 Cape Verde',
-    'CAYMAN ISLANDS': '🇰🇾 Cayman Islands',
-    'CENTRAL AFRICAN REPUBLIC': '🇨🇫 Central African Republic',
-    'CHAD': '🇹🇩 Chad',
-    'CHILE': '🇨🇱 Chile',
-    'CHINA': '🇨🇳 China',
-    'CHRISTMAS ISLAND': '🇨🇽 Christmas Island',
-    'COCOS (KEELING) ISLANDS': '🇨🇨 Cocos (Keeling) Islands',
-    'COLOMBIA': '🇨🇴 Colombia',
-    'COMOROS': '🇰🇲 Comoros',
-    'CONGO': '🇨🇬 Congo',
-    'CONGO, THE DEMOCRATIC REPUBLIC OF THE': '🇨🇩 Congo, The Democratic Republic of the',
-    'COOK ISLANDS': '🇨🇰 Cook Islands',
-    'COSTA RICA': '🇨🇷 Costa Rica',
-    'COTE DIVOIRE': '🇨🇮 Cote D\'Ivoire',
-    'CROATIA': '🇭🇷 Croatia',
-    'CUBA': '🇨🇺 Cuba',
-    'CYPRUS': '🇨🇾 Cyprus',
-    'CZECH REPUBLIC': '🇨🇿 Czech Republic',
-    'DENMARK': '🇩🇰 Denmark',
-    'DJIBOUTI': '🇩🇯 Djibouti',
-    'DOMINICA': '🇩🇲 Dominica',
-    'DOMINICAN REPUBLIC': '🇩🇴 Dominican Republic',
-    'ECUADOR': '🇪🇨 Ecuador',
-    'EGYPT': '🇪🇬 Egypt',
-    'EL SALVADOR': '🇸🇻 El Salvador',
-    'EQUATORIAL GUINEA': '🇬🇶 Equatorial Guinea',
-    'ERITREA': '🇪🇷 Eritrea',
-    'ESTONIA': '🇪🇪 Estonia',
-    'ETHIOPIA': '🇪🇹 Ethiopia',
-    'FALKLAND ISLANDS (MALVINAS)': '🇫🇰 Falkland Islands (Malvinas)',
-    'FAROE ISLANDS': '🇫🇴 Faroe Islands',
-    'FIJI': '🇫🇯 Fiji',
-    'FINLAND': '🇫🇮 Finland',
-    'FRANCE': '🇫🇷 France',
-    'FRENCH GUIANA': '🇬🇫 French Guiana',
-    'FRENCH POLYNESIA': '🇵🇫 French Polynesia',
-    'FRENCH SOUTHERN TERRITORIES': '🇹🇫 French Southern Territories',
-    'GABON': '🇬🇦 Gabon',
-    'GAMBIA': '🇬🇲 Gambia',
-    'GEORGIA': '🇬🇪 Georgia',
-    'GERMANY': '🇩🇪 Germany',
-    'GHANA': '🇬🇭 Ghana',
-    'GIBRALTAR': '🇬🇮 Gibraltar',
-    'GREECE': '🇬🇷 Greece',
-    'GREENLAND': '🇬🇱 Greenland',
-    'GRENADA': '🇬🇩 Grenada',
-    'GUADELOUPE': '🇬🇵 Guadeloupe',
-    'GUAM': '🇬🇺 Guam',
-    'GUATEMALA': '🇬🇹 Guatemala',
-    'GUERNSEY': '🇬🇬 Guernsey',
-    'GUINEA': '🇬🇳 Guinea',
-    'GUINEA-BISSAU': '🇬🇼 Guinea-Bissau',
-    'GUYANA': '🇬🇾 Guyana',
-    'HAITI': '🇭🇹 Haiti',
-    'HOLY SEE (VATICAN CITY STATE)': '🇻🇦 Holy See (Vatican City State)',
-    'HONDURAS': '🇭🇳 Honduras',
-    'HONG KONG': '🇭🇰 Hong Kong',
-    'HUNGARY': '🇭🇺 Hungary',
-    'ICELAND': '🇮🇸 Iceland',
-    'INDIA': '🇮🇳 India',
-    'INDONESIA': '🇮🇩 Indonesia',
-    'IRAN, ISLAMIC REPUBLIC OF': '🇮🇷 Iran, Islamic Republic of',
-    'IRAQ': '🇮🇶 Iraq',
-    'IRELAND': '🇮🇪 Ireland',
-    'ISLE OF MAN': '🇮🇲 Isle of Man',
-    'ISRAEL': '🇮🇱 Israel',
-    'ITALY': '🇮🇹 Italy',
-    'JAMAICA': '🇯🇲 Jamaica',
-    'JAPAN': '🇯🇵 Japan',
-    'JERSEY': '🇯🇪 Jersey',
-    'JORDAN': '🇯🇴 Jordan',
-    'KAZAKHSTAN': '🇰🇿 Kazakhstan',
-    'KENYA': '🇰🇪 Kenya',
-    'KIRIBATI': '🇰🇮 Kiribati',
-    'KOREA, DEMOCRATIC PEOPLES REPUBLIC OF': '🇰🇵 Korea, Democratic People\'s Republic of',
-    'KOREA, REPUBLIC OF': '🇰🇷 Korea, Republic of',
-    'KUWAIT': '🇰🇼 Kuwait',
-    'KYRGYZSTAN': '🇰🇬 Kyrgyzstan',
-    'LAO PEOPLES DEMOCRATIC REPUBLIC': '🇱🇦 Lao People\'s Democratic Republic',
-    'LATVIA': '🇱🇻 Latvia',
-    'LEBANON': '🇱🇧 Lebanon',
-    'LESOTHO': '🇱🇸 Lesotho',
-    'LIBERIA': '🇱🇷 Liberia',
-    'LIBYAN ARAB JAMAHIRIYA': '🇱🇾 Libyan Arab Jamahiriya',
-    'LIECHTENSTEIN': '🇱🇮 Liechtenstein',
-    'LITHUANIA': '🇱🇹 Lithuania',
-    'LUXEMBOURG': '🇱🇺 Luxembourg',
-    'MACAO': '🇲🇴 Macao',
-    'MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF': '🇲🇰 Macedonia, The Former Yugoslav Republic of',
-    'MADAGASCAR': '🇲🇬 Madagascar',
-    'MALAWI': '🇲🇼 Malawi',
-    'MALAYSIA': '🇲🇾 Malaysia',
-    'MALDIVES': '🇲🇻 Maldives',
-    'MALI': '🇲🇱 Mali',
-    'MALTA': '🇲🇹 Malta',
-    'MARSHALL ISLANDS': '🇲🇭 Marshall Islands',
-    'MARTINIQUE': '🇲🇶 Martinique',
-    'MAURITANIA': '🇲🇷 Mauritania',
-    'MAURITIUS': '🇲🇺 Mauritius',
-    'MAYOTTE': '🇾🇹 Mayotte',
-    'MEXICO': '🇲🇽 Mexico',
-    'MICRONESIA, FEDERATED STATES OF': '🇫🇲 Micronesia, Federated States of',
-    'MOLDOVA, REPUBLIC OF': '🇲🇩 Moldova, Republic of',
-    'MONACO': '🇲🇨 Monaco',
-    'MONGOLIA': '🇲🇳 Mongolia',
-    'MONTENEGRO': '🇲🇪 Montenegro',
-    'MONTSERRAT': '🇲🇸 Montserrat',
-    'MOROCCO': '🇲🇦 Morocco',
-    'MOZAMBIQUE': '🇲🇿 Mozambique',
-    'MYANMAR': '🇲🇲 Myanmar',
-    'NAMIBIA': '🇳🇦 Namibia',
-    'NAURU': '🇳🇷 Nauru',
-    'NEPAL': '🇳🇵 Nepal',
-    'NETHERLANDS': '🇳🇱 Netherlands',
-    'NETHERLANDS ANTILLES': '🇦🇳 Netherlands Antilles',
-    'NEW CALEDONIA': '🇳🇨 New Caledonia',
-    'NEW ZEALAND': '🇳🇿 New Zealand',
-    '+505': 'NICARAGUA',
-    '+227': 'NIGER',
-    '+234': 'NIGERIA',
-    '+683': 'NIUE',
-    '+672': 'NORFOLK ISLAND',
-    '+1670': 'NORTHERN MARIANA ISLANDS',
-    '+47': 'NORWAY',
-    '+968': 'OMAN',
-    '+92': 'PAKISTAN',
-    '+680': 'PALAU',
-    '+970': 'PALESTINIAN TERRITORY, OCCUPIED',
-    '+507': 'PANAMA',
-    '+675': 'PAPUA NEW GUINEA',
-    '+595': 'PARAGUAY',
-    '+51': 'PERU',
-    '+63': 'PHILIPPINES',
-    '+870': 'PITCAIRN',
-    '+48': 'POLAND',
-    '+351': 'PORTUGAL',
-    '+1': 'PUERTO RICO',
-    '+974': 'QATAR',
-    '+262': 'REUNION',
-    '+40': 'ROMANIA',
-    '+7': 'RUSSIAN FEDERATION',
-    '+250': 'RWANDA',
-    '+590': 'SAINT BARTHELEMY',
-    '+290': 'SAINT HELENA',
-    '+1869': 'SAINT KITTS AND NEVIS',
-    '+1758': 'SAINT LUCIA',
-    '+590': 'SAINT MARTIN',
-    '+508': 'SAINT PIERRE AND MIQUELON',
-    '+1784': 'SAINT VINCENT AND THE GRENADINES',
-    '+685': 'SAMOA',
-    '+378': 'SAN MARINO',
-    '+239': 'SAO TOME AND PRINCIPE',
-    '+966': 'SAUDI ARABIA',
-    '+221': 'SENEGAL',
-    '+381': 'SERBIA',
-    '+248': 'SEYCHELLES',
-    '+232': 'SIERRA LEONE',
-    '+65': 'SINGAPORE',
-    '+421': 'SLOVAKIA',
-    '+386': 'SLOVENIA',
-    '+677': 'SOLOMON ISLANDS',
-    '+252': 'SOMALIA',
-    '+27': 'SOUTH AFRICA',
-    '+500': 'SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS',
-    '+34': 'SPAIN',
-    '+94': 'SRI LANKA',
-    '+249': 'SUDAN',
-    '+597': 'SURINAME',
-    '+47': 'SVALBARD AND JAN MAYEN',
-    '+268': 'SWAZILAND',
-    '+46': 'SWEDEN',
-    '+41': 'SWITZERLAND',
-    '+963': 'SYRIAN ARAB REPUBLIC',
-    '+886': 'TAIWAN, PROVINCE OF CHINA',
-    '+992': 'TAJIKISTAN',
-    '+255': 'TANZANIA, UNITED REPUBLIC OF',
-    '+66': 'THAILAND',
-    '+670': 'TIMOR-LESTE',
-    '+228': 'TOGO',
-    '+690': 'TOKELAU',
-    '+676': 'TONGA',
-    '+1868': 'TRINIDAD AND TOBAGO',
-    '+216': 'TUNISIA',
-    '+90': 'TURKEY',
-    '+993': 'TURKMENISTAN',
-    '+1649': 'TURKS AND CAICOS ISLANDS',
-    '+688': 'TUVALU',
-    '+256': 'UGANDA',
-    '+380': 'UKRAINE',
-    '+971': 'UNITED ARAB EMIRATES',
-    '+44': 'UNITED KINGDOM',
-    '+1': 'UNITED STATES',
-    '+598': 'URUGUAY',
-    '+998': 'UZBEKISTAN',
-    '+678': 'VANUATU',
-    '+58': 'VENEZUELA',
-    '+84': 'VIET NAM',
-    '+1284': 'VIRGIN ISLANDS, BRITISH',
-    '+1340': 'VIRGIN ISLANDS, U.S.',
-    '+681': 'WALLIS AND FUTUNA',
-    '+212': 'WESTERN SAHARA',
-    '+967': 'YEMEN',
-    '+260': 'ZAMBIA',
-    '+263': 'ZIMBABWE'
+    'PAKISTAN': '🇵🇰 Pakistan',
+    'PALAU': '🇵🇼 Palau',
+    'PALESTINIAN TERRITORY, OCCUPIED': '🇵🇸 Palestinian Territory, Occupied',
+    'PANAMA': '🇵🇦 Panama',
+    'PAPUA NEW GUINEA': '🇵🇬 Papua New Guinea',
+    'PARAGUAY': '🇵🇾 Paraguay',
+    'PERU': '🇵🇪 Peru',
+    'PHILIPPINES': '🇵🇭 Philippines',
+    'PITCAIRN': '🇵🇳 Pitcairn',
+    'POLAND': '🇵🇱 Poland',
+    'PORTUGAL': '🇵🇹 Portugal',
+    'PUERTO RICO': '🇵🇷 Puerto Rico',
+    'QATAR': '🇶🇦 Qatar',
+    'REUNION': '🇷🇪 Reunion',
+    'ROMANIA': '🇷🇴 Romania',
+    'RUSSIAN FEDERATION': '🇷🇺 Russian Federation',
+    'RWANDA': '🇷🇼 Rwanda',
+    'SAINT BARTHELEMY': '🇧🇱 Saint Barthelemy',
+    'SAINT HELENA': '🇸🇭 Saint Helena',
+    'SAINT KITTS AND NEVIS': '🇰🇳 Saint Kitts and Nevis',
+    'SAINT LUCIA': '🇱🇨 Saint Lucia',
+    'SAINT MARTIN': '🇲🇫 Saint Martin',
+    'SAINT PIERRE AND MIQUELON': '🇵🇲 Saint Pierre and Miquelon',
+    'SAINT VINCENT AND THE GRENADINES': '🇻🇨 Saint Vincent and the Grenadines',
+    'SAMOA': '🇼🇸 Samoa',
+    'SAN MARINO': '🇸🇲 San Marino',
+    'SAO TOME AND PRINCIPE': '🇸🇹 Sao Tome and Principe',
+    'SAUDI ARABIA': '🇸🇦 Saudi Arabia',
+    'SENEGAL': '🇸🇳 Senegal',
+    'SERBIA': '🇷🇸 Serbia',
+    'SEYCHELLES': '🇸🇨 Seychelles',
+    'SIERRA LEONE': '🇸🇱 Sierra Leone',
+    'SINGAPORE': '🇸🇬 Singapore',
+    'SLOVAKIA': '🇸🇰 Slovakia',
+    'SLOVENIA': '🇸🇮 Slovenia',
+    'SOLOMON ISLANDS': '🇸🇧 Solomon Islands',
+    'SOMALIA': '🇸🇴 Somalia',
+    'SOUTH AFRICA': '🇿🇦 South Africa',
+    'SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS': '🇬🇸 South Georgia and the South Sandwich Islands',
+    'SPAIN': '🇪🇸 Spain',
+    'SRI LANKA': '🇱🇰 Sri Lanka',
+    'SUDAN': '🇸🇩 Sudan',
+    'SURINAME': '🇸🇷 Suriname',
+    'SVALBARD AND JAN MAYEN': '🇸🇯 Svalbard and Jan Mayen',
+    'SWAZILAND': '🇸🇿 Swaziland',
+    'SWEDEN': '🇸🇪 Sweden',
+    'SWITZERLAND': '🇨🇭 Switzerland',
+    'SYRIAN ARAB REPUBLIC': '🇸🇾 Syrian Arab Republic',
+    'TAIWAN, PROVINCE OF CHINA': '🇹🇼 Taiwan, Province of China',
+    'TAJIKISTAN': '🇹🇯 Tajikistan',
+    'TANZANIA, UNITED REPUBLIC OF': '🇹🇿 Tanzania, United Republic of',
+    'THAILAND': '🇹🇭 Thailand',
+    'TIMOR-LESTE': '🇹🇱 Timor-Leste',
+    'TOGO': '🇹🇬 Togo',
+    'TOKELAU': '🇹🇰 Tokelau',
+    'TONGA': '🇹🇴 Tonga',
+    'TRINIDAD AND TOBAGO': '🇹🇹 Trinidad and Tobago',
+    'TUNISIA': '🇹🇳 Tunisia',
+    'TURKEY': '🇹🇷 Turkey',
+    'TURKMENISTAN': '🇹🇲 Turkmenistan',
+    'TURKS AND CAICOS ISLANDS': '🇹🇨 Turks and Caicos Islands',
+    'TUVALU': '🇹🇻 Tuvalu',
+    'UGANDA': '🇺🇬 Uganda',
+    'UKRAINE': '🇺🇦 Ukraine',
+    'UNITED ARAB EMIRATES': '🇦🇪 United Arab Emirates',
+    'UNITED KINGDOM': '🇬🇧 United Kingdom',
+    'UNITED STATES': '🇺🇸 United States',
+    'URUGUAY': '🇺🇾 Uruguay',
+    'UZBEKISTAN': '🇺🇿 Uzbekistan',
+    'VANUATU': '🇻🇺 Vanuatu',
+    'VENEZUELA': '🇻🇪 Venezuela',
+    'VIET NAM': '🇻🇳 Viet Nam',
+    'VIRGIN ISLANDS, BRITISH': '🇻🇬 Virgin Islands, British',
+    'VIRGIN ISLANDS, U.S.': '🇻🇮 Virgin Islands, U.S.',
+    'WALLIS AND FUTUNA': '🇼🇫 Wallis and Futuna',
+    'WESTERN SAHARA': '🇪🇭 Western Sahara',
+    'YEMEN': '🇾🇪 Yemen',
+    'ZAMBIA': '🇿🇲 Zambia',
+    'ZIMBABWE': '🇿🇼 Zimbabwe',
+    'Unknown': '❓ Unknown'
 }
 
 def detect_country_from_number(phone_number):
@@ -1470,8 +726,8 @@ class SmartCache:
 # Global smart cache instance
 smart_cache = SmartCache()
 
-# Setup logging (Re-configured to use custom print() function)
-# Removed standard logging import and configuration lines
+# Setup logging to output errors to the terminal
+logging.basicConfig(level=logging.ERROR, format='%(asctime)s %(levelname)s %(message)s')
 
 # Enhanced balance tracking and user management
 class UserManager:
@@ -1530,7 +786,7 @@ class UserManager:
         users_data[user_id] = user_data
         save_json_data(USERS_FILE, users_data)
         
-        log_output("INFO", f"Updated balance for user {user_id}: {old_balance:.4f} -> {new_balance:.4f} ({reason})") # <--- FIXED: Use custom log function
+        logging.info(f"Updated balance for user {user_id}: {old_balance:.4f} -> {new_balance:.4f} ({reason})")
         return True
 
 def load_json_data(filepath, default_data):
@@ -1643,28 +899,38 @@ class IvaSmsManager:
         """Create SeleniumBase driver with Cloudflare bypass."""
         max_attempts = 3
         
-        # --- Removed data_dir creation block as requested (No session persistence) ---
-        
-        # --- FIXED: Use explicit Chrome options for server environment ---
-        options = ChromeOptions()
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--disable-gpu")
-        options.add_argument("--headless=new")
+        # --- FIX: Use an absolute path in the user's home directory for permissions ---
+        try:
+            home_dir = os.path.expanduser('~')
+            # Create a dedicated directory for the bot data in the home folder
+            data_dir = os.path.join(home_dir, 'pg_otp_bot_data', 'sms_driver_data')
+            
+            # Ensure the directory exists with the correct permissions
+            os.makedirs(data_dir, exist_ok=True)
+            
+            logging.info(f"Using data directory: {data_dir}")
+            
+        except Exception as e:
+            logging.error(f"Failed to create data directory at {os.path.join(home_dir, 'pg_otp_bot_data')}: {e}")
+            # Fallback to a relative path if home dir fails for some reason
+            data_dir = './sms_driver_data_fallback'
+            os.makedirs(data_dir, exist_ok=True)
+            logging.info(f"Falling back to relative path: {data_dir}")
         # --- End of fix ---
 
         for attempt in range(max_attempts):
             try:
                 # Initialize SeleniumBase driver with UC mode for Cloudflare bypass
+                # Add a persistent user_data_dir for the SMS driver
                 driver = Driver(
                     uc=True, 
-                    headless=True, # Keeping headless=True (will use internal options if not explicitly passed)
-                    options=options # <--- FIXED: Pass the explicit options object
+                    headless2=True, # More reliable headless for Linux
+                    user_data_dir=data_dir # Use the robust, absolute path
                 )
-                log_output("INFO", f"✅ Created SeleniumBase driver (non-persistent session)") # <--- FIXED: Use custom log function
+                logging.info(f"✅ Created SeleniumBase driver with persistent session at {data_dir}")
                 return driver
             except Exception as e:
-                log_output("ERROR", f"Driver creation attempt {attempt + 1} failed: {str(e)}") # <--- FIXED: Use custom log function
+                logging.error(f"Driver creation attempt {attempt + 1} failed: {str(e)}")
                 if attempt < max_attempts - 1:
                     time.sleep(3)
                 else:
@@ -1675,20 +941,20 @@ class IvaSmsManager:
         self._sms_driver = self._create_driver()
         self._is_initialized = True
         self._setup_driver(self._sms_driver, "https://www.ivasms.com/portal/live/my_sms")
-        log_output("INFO", "Number scraping at startup is disabled. Numbers must be managed manually via commands.") # <--- FIXED: Use custom log function
+        logging.info("Number scraping at startup is disabled. Numbers must be managed manually via commands.")
 
 
     def _login_driver(self, driver):
         """Login to ivasms.com using SeleniumBase UC mode."""
         try:
-            log_output("INFO", "🔐 Logging in to ivasms.com with Cloudflare bypass...") # <--- FIXED: Use custom log function
+            logging.info("🔐 Logging in to ivasms.com with Cloudflare bypass...")
             # Use SeleniumBase UC mode to bypass Cloudflare
             driver.uc_open_with_reconnect("https://www.ivasms.com/login", reconnect_time=6)
             time.sleep(3)
             
             # Check if already logged in by looking for portal URL
             if "portal" in driver.current_url:
-                log_output("INFO", "✅ Already logged in (session restored)") # <--- FIXED: Use custom log function
+                logging.info("✅ Already logged in (session restored)")
                 return
             
             wait = WebDriverWait(driver, 20)
@@ -1709,10 +975,10 @@ class IvaSmsManager:
             wait.until(EC.url_contains("portal"))
             time.sleep(2)
             
-            log_output("INFO", "✅ Login completed with Cloudflare bypass") # <--- FIXED: Use custom log function
+            logging.info("✅ Login completed with Cloudflare bypass")
             
         except Exception as e:
-            log_output("ERROR", f"❌ Login failed: {e}") # <--- FIXED: Use custom log function
+            logging.error(f"❌ Login failed: {e}")
             raise
 
     def _click_tutorial_popups(self, driver):
@@ -1736,7 +1002,7 @@ class IvaSmsManager:
             WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
             self._click_tutorial_popups(driver)
         except Exception as e:
-            log_output("ERROR", f"Failed to setup driver for {url}: {e}") # <--- FIXED: Use custom log function
+            logging.error(f"Failed to setup driver for {url}: {e}")
             raise
 
     def refresh_sms_page(self):
@@ -1746,7 +1012,7 @@ class IvaSmsManager:
             time_since_refresh = current_time - self._last_refresh_time
             
             if time_since_refresh >= 1200:
-                log_output("INFO", f"🔄 Refreshing SMS page after {time_since_refresh/60:.1f} minutes") # <--- FIXED: Use custom log function
+                logging.info(f"🔄 Refreshing SMS page after {time_since_refresh/60:.1f} minutes")
                 
                 if self._application and self._loop:
                     asyncio.run_coroutine_threadsafe(
@@ -1762,18 +1028,18 @@ class IvaSmsManager:
                 WebDriverWait(self._sms_driver, 20).until(EC.presence_of_element_located((By.ID, "LiveTestSMS")))
                 
                 self._last_refresh_time = current_time
-                log_output("INFO", "✅ SMS page refreshed") # <--- FIXED: Use custom log function
+                logging.info("✅ SMS page refreshed")
             else:
-                log_output("DEBUG", f"SMS page refresh not needed yet. Next refresh in {(1200 - time_since_refresh)/60:.1f} minutes") # <--- FIXED: Use custom log function
+                logging.debug(f"SMS page refresh not needed yet. Next refresh in {(1200 - time_since_refresh)/60:.1f} minutes")
                 
         except Exception as e:
-            log_output("ERROR", f"Failed to refresh SMS page: {e}") # <--- FIXED: Use custom log function
+            logging.error(f"Failed to refresh SMS page: {e}")
             try:
                 self._setup_driver(self._sms_driver, "https://www.ivasms.com/portal/live/my_sms")
                 self._last_refresh_time = time.time()
-                log_output("INFO", "✅ SMS driver setup after page refresh failure") # <--- FIXED: Use custom log function
+                logging.info("✅ SMS driver setup after page refresh failure")
             except Exception as fallback_e:
-                log_output("ERROR", f"Failed to setup SMS driver after page refresh failure: {fallback_e}") # <--- FIXED: Use custom log function
+                logging.error(f"Failed to setup SMS driver after page refresh failure: {fallback_e}")
 
     def scrape_and_save_all_sms(self):
         # Refresh SMS page if needed before scraping
@@ -1802,13 +1068,13 @@ class IvaSmsManager:
                         message = message_elem[-1].get_text(strip=True)
                         sms_list.append({'country': country, 'provider': provider, 'message': message, 'phone': phone})
                 except Exception as e:
-                    log_output("WARNING", f"Could not parse an SMS row: {e}") # <--- FIXED: Use custom log function
+                    logging.warning(f"Could not parse an SMS row: {e}")
 
             with open(SMS_CACHE_FILE, 'w', encoding='utf-8') as f:
                 for sms in sms_list:
                     f.write(json.dumps(sms) + "\n")
         except Exception as e:
-            log_output("ERROR", f"SMS scraping failed: {e}") # <--- FIXED: Use custom log function
+            logging.error(f"SMS scraping failed: {e}")
             self._setup_driver(self._sms_driver, "https://www.ivasms.com/portal/live/my_sms")
 
 
@@ -1880,7 +1146,7 @@ class IvaSmsManager:
         users_data[user_id] = user_data
         save_json_data(USERS_FILE, users_data)
         
-        log_output("INFO", f"Assigned number {number} to user {user_id} (country: {country})") # <--- FIXED: Use custom log function
+        logging.info(f"Assigned number {number} to user {user_id} (country: {country})")
         
         return {
             'success': True,
@@ -1925,14 +1191,14 @@ class IvaSmsManager:
                 # Atomic replacement: temp file becomes the new numbers file
                 if number_to_give:
                     os.replace(temp_file, NUMBERS_FILE)
-                    log_output("INFO", f"Assigned number {number_to_give} for country {country}") # <--- FIXED: Use custom log function
+                    logging.info(f"Assigned number {number_to_give} for country {country}")
                 else:
                     # No number found, remove temp file
                     os.remove(temp_file)
                     if country:
-                        log_output("WARNING", f"No numbers available for country {country}") # <--- FIXED: Use custom log function
+                        logging.warning(f"No numbers available for country {country}")
                     else:
-                        log_output("WARNING", "No numbers available") # <--- FIXED: Use custom log function
+                        logging.warning("No numbers available")
                 
                 return number_to_give
                 
@@ -1940,7 +1206,7 @@ class IvaSmsManager:
                 # Clean up temp file on error
                 if os.path.exists(temp_file):
                     os.remove(temp_file)
-                log_output("ERROR", f"Error in get_number_from_file: {e}") # <--- FIXED: Use custom log function
+                logging.error(f"Error in get_number_from_file: {e}")
                 return None
 
     def get_available_number_count(self):
@@ -1953,16 +1219,16 @@ class IvaSmsManager:
     
     def cleanup(self):
         """Clean up SeleniumBase driver instances."""
-        log_output("INFO", "Cleaning up SeleniumBase driver instances.") # <--- FIXED: Use custom log function
+        logging.info("Cleaning up SeleniumBase driver instances.")
         try:
             if self._sms_driver:
                 self._sms_driver.quit()
-                log_output("INFO", "SMS driver quit successfully.") # <--- FIXED: Use custom log function
+                logging.info("SMS driver quit successfully.")
         except Exception as e:
-            log_output("ERROR", f"Error quitting SMS driver: {e}") # <--- FIXED: Use custom log function
+            logging.error(f"Error quitting SMS driver: {e}")
             
         self._sms_driver = None
-        log_output("INFO", "SeleniumBase driver cleanup complete.") # <--- FIXED: Use custom log function
+        logging.info("SeleniumBase driver cleanup complete.")
 
 # --- Telegram Bot UI and Logic ---
 
@@ -1995,7 +1261,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # User exists, update their name and username
         users_data[user_id]['username'] = user.username
         users_data[user_id]['first_name'] = user.first_name
-        log_output("INFO", f"Updated user info for {user_id}") # <--- FIXED: Use custom log function
+        logging.info(f"Updated user info for {user_id}")
 
     save_json_data(USERS_FILE, users_data)
     
@@ -2034,13 +1300,13 @@ async def safe_answer_callback(query, text="", show_alert=False):
         await query.answer(text=text, show_alert=show_alert)
         return True
     except (error.TimedOut, error.NetworkError) as e:
-        log_output("WARNING", f"Callback answer timeout: {e}") # <--- FIXED: Use custom log function
+        logging.warning(f"Callback answer timeout: {e}")
         return False
     except error.BadRequest as e:
-        log_output("WARNING", f"Could not answer callback query: {e}") # <--- FIXED: Use custom log function
+        logging.warning(f"Could not answer callback query: {e}")
         return False
     except Exception as e:
-        log_output("ERROR", f"Unexpected error answering callback: {e}") # <--- FIXED: Use custom log function
+        logging.error(f"Unexpected error answering callback: {e}")
         return False
 
 
@@ -2220,7 +1486,7 @@ async def handle_get_number(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 parse_mode=ParseMode.HTML
             )
         except Exception as e:
-            log_output("ERROR", f"Failed to send out-of-stock notification to admin: {e}") # <--- FIXED: Use custom log function
+            logging.error(f"Failed to send out-of-stock notification to admin: {e}")
         return
     
     # Show country selection with enhanced UI
@@ -2519,7 +1785,7 @@ async def handle_withdrawal_request(update: Update, context: ContextTypes.DEFAUL
                     parse_mode=ParseMode.HTML
                 )
             except Exception as e:
-                log_output("ERROR", f"Could not send referral bonus notification to {referrer_id}: {e}") # <--- FIXED: Use custom log function
+                logging.error(f"Could not send referral bonus notification to {referrer_id}: {e}")
 
     save_json_data(USERS_FILE, all_users_data)
 
@@ -2534,7 +1800,7 @@ async def handle_withdrawal_request(update: Update, context: ContextTypes.DEFAUL
         f"<b>🔥 New Withdrawal Request!</b>\n\n"
         f"<b>User:</b> {html_escape(user_data['first_name'])}\n"
         f"<b>Username:</b> {username}\n"
-        f"<b>ID:</b> <code>{user_id}</code>\n"
+        f"<b>ID:</b> f"<code>{user_id}</code>\n"
         f"<b>Amount:</b> ৳{amount_to_withdraw:.2f}\n"
         f"<b>Method:</b> {payment_method}\n"
         f"<b>Payment Info:</b> <code>{payment_info}</code>"
@@ -2573,7 +1839,7 @@ async def handle_withdraw_history(update: Update, context: ContextTypes.DEFAULT_
 async def broadcast_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     if user.username != ADMIN_USERNAME:
-        log_output("WARNING", f"Unauthorized broadcast attempt by {user.username}") # <--- FIXED: Use custom log function
+        logging.warning(f"Unauthorized broadcast attempt by {user.username}")
         return
 
     await update.message.reply_text(
@@ -2587,7 +1853,7 @@ async def admin_stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE
     """Enhanced admin stats for monitoring 1k+ users."""
     user = update.effective_user
     if user.username != ADMIN_USERNAME:
-        log_output("WARNING", f"Unauthorized stats attempt by {user.username}") # <--- FIXED: Use custom log function
+        logging.warning(f"Unauthorized stats attempt by {user.username}")
         return
 
     stats = UserManager.get_user_stats()
@@ -2644,7 +1910,7 @@ async def add_numbers_command(update: Update, context: ContextTypes.DEFAULT_TYPE
     """Allows the admin to add new numbers to the bot."""
     user = update.effective_user
     if user.username != ADMIN_USERNAME:
-        log_output("WARNING", f"Unauthorized /add attempt by {user.username}") # <--- FIXED: Use custom log function
+        logging.warning(f"Unauthorized /add attempt by {user.username}")
         return
 
     if not context.args:
@@ -2662,7 +1928,7 @@ async def add_numbers_command(update: Update, context: ContextTypes.DEFAULT_TYPE
                     f.write(f"{number}\n")
                     added_count += 1
                 except Exception as e:
-                    log_output("ERROR", f"Failed to write number {number} to file: {e}") # <--- FIXED: Use custom log function
+                    logging.error(f"Failed to write number {number} to file: {e}")
                     failed_numbers.append(number)
 
     if added_count > 0:
@@ -2676,7 +1942,7 @@ async def delete_numbers_command(update: Update, context: ContextTypes.DEFAULT_T
     """Allows the admin to delete numbers from the bot."""
     user = update.effective_user
     if user.username != ADMIN_USERNAME:
-        log_output("WARNING", f"Unauthorized /delete attempt by {user.username}") # <--- FIXED: Use custom log function
+        logging.warning(f"Unauthorized /delete attempt by {user.username}")
         return
 
     if not context.args:
@@ -2716,7 +1982,7 @@ async def delete_numbers_command(update: Update, context: ContextTypes.DEFAULT_T
         except Exception as e:
             if os.path.exists(temp_file):
                 os.remove(temp_file)
-            log_output("ERROR", f"Error deleting numbers: {e}") # <--- FIXED: Use custom log function
+            logging.error(f"Error deleting numbers: {e}")
             await update.message.reply_text(f"<b>Error during deletion: {e}</b>", parse_mode=ParseMode.HTML)
             return
 
@@ -2776,8 +2042,11 @@ async def log_sms_to_d1(sms_data: dict, otp: str, owner_id: str):
     # API Key removed as requested
     # !!! ------------------------ !!!
 
+    # --- FIX ---
+    # The check was comparing against the correct URL.
+    # It should compare against the placeholder URL.
     if CLOUDFLARE_WORKER_URL == "https://YOUR_WORKER_NAME.YOUR_ACCOUNT.workers.dev":
-        log_output("WARNING", "Cloudflare Worker URL is not set. Skipping D1 log.") # <--- FIXED: Use custom log function
+        logging.warning("Cloudflare Worker URL is not set. Skipping D1 log.")
         return
 
     payload = {
@@ -2798,11 +2067,11 @@ async def log_sms_to_d1(sms_data: dict, otp: str, owner_id: str):
         async with aiohttp.ClientSession() as session:
             async with session.post(CLOUDFLARE_WORKER_URL, json=payload, headers=headers) as response:
                 if response.status == 201:
-                    log_output("INFO", f"Successfully logged SMS for {payload['phone']} to D1.") # <--- FIXED: Use custom log function
+                    logging.info(f"Successfully logged SMS for {payload['phone']} to D1.")
                 else:
-                    log_output("ERROR", f"Failed to log SMS to D1. Status: {response.status}, Body: {await response.text()}") # <--- FIXED: Use custom log function
+                    logging.error(f"Failed to log SMS to D1. Status: {response.status}, Body: {await response.text()}")
     except Exception as e:
-        log_output("ERROR", f"Error connecting to Cloudflare Worker: {e}") # <--- FIXED: Use custom log function
+        logging.error(f"Error connecting to Cloudflare Worker: {e}")
 
 
 async def sms_watcher_task(application: Application):
@@ -2861,18 +2130,18 @@ async def sms_watcher_task(application: Application):
                                     owner_id = uid
                                     break
                         
-                        # --- D1 LOGGING BLOCK ---
+                        # --- ADD THIS BLOCK ---
                         # Asynchronously log to Cloudflare D1
                         try:
                             await log_sms_to_d1(sms_data, otp, owner_id)
                         except Exception as e:
-                            log_output("ERROR", f"Failed to log SMS to D1: {e}") # <--- FIXED: Use custom log function
+                            logging.error(f"Failed to log SMS to D1: {e}")
                         # --- END OF BLOCK ---
 
                         if owner_id:
-                            log_output("INFO", f"✅ Found owner for phone {phone} -> User ID: {owner_id}") # <--- FIXED: Use custom log function
+                            logging.info(f"✅ Found owner for phone {phone} -> User ID: {owner_id}")
                         else:
-                            log_output("WARNING", f"❌ No owner found for phone {phone}") # <--- FIXED: Use custom log function
+                            logging.warning(f"❌ No owner found for phone {phone}")
 
                         # Format and send messages
                         otp_display = f"<code>{otp}</code>" if otp != "N/A" else "Not found"
@@ -2903,7 +2172,7 @@ async def sms_watcher_task(application: Application):
                             # Full Message Header
                             f"<b>✉️ Full Message:</b>\n\n"
                             
-                            # Full Message Body is indented using </blockquote>
+                            # Full Message Body is indented using <blockquote>
                             f"<blockquote><i>{html_escape(message) if message else '(No message body)'}</i></blockquote>"
                         )
 
@@ -2921,7 +2190,7 @@ async def sms_watcher_task(application: Application):
                                 reply_markup=group_keyboard
                             )
                         except Exception as e:
-                            log_output("ERROR", f"Failed to send SMS to group: {e}") # <--- FIXED: Use custom log function
+                            logging.error(f"Failed to send SMS to group: {e}")
 
                         # Handle user-specific actions with enhanced tracking
                         if owner_id:
@@ -2959,7 +2228,7 @@ async def sms_watcher_task(application: Application):
                                     parse_mode=ParseMode.HTML
                                 )
                             except Exception as e:
-                                log_output("ERROR", f"Failed to send inbox SMS to user {owner_id}: {e}") # <--- FIXED: Use custom log function
+                                logging.error(f"Failed to send inbox SMS to user {owner_id}: {e}")
                         else:
                             # No user found - send to admin and update admin balance
                             UserManager.update_user_balance(str(ADMIN_ID), SMS_AMOUNT, "Unassigned SMS")
@@ -2980,13 +2249,13 @@ async def sms_watcher_task(application: Application):
                                     text=admin_msg,
                                     parse_mode=ParseMode.HTML
                                 )
-                                log_output("INFO", f"Sent unassigned SMS to admin: {phone}") # <--- FIXED: Use custom log function
+                                logging.info(f"Sent unassigned SMS to admin: {phone}")
                             except Exception as e:
-                                log_output("ERROR", f"Failed to send unassigned SMS to admin: {e}") # <--- FIXED: Use custom log function
+                                logging.error(f"Failed to send unassigned SMS to admin: {e}")
 
                         sent_sms_keys.add(unique_key)
                     except Exception as e:
-                        log_output("ERROR", f"Error processing SMS line: {e}") # <--- FIXED: Use custom log function
+                        logging.error(f"Error processing SMS line: {e}")
 
             if new_sms_found_for_user:
                 # Clear cache after updates
@@ -2995,7 +2264,7 @@ async def sms_watcher_task(application: Application):
             save_sent_sms_keys(sent_sms_keys)
 
         except Exception as e:
-            log_output("ERROR", f"Error in sms_watcher_task: {e}") # <--- FIXED: Use custom log function
+            logging.error(f"Error in sms_watcher_task: {e}")
         
         await asyncio.sleep(10)
 
@@ -3039,19 +2308,19 @@ async def handle_text_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Log errors and handle gracefully."""
-    log_output("ERROR", f"Exception while handling an update: {context.error}") # <--- FIXED: Use custom log function
+    logging.error("Exception while handling an update:", exc_info=context.error)
     
     if isinstance(context.error, error.TimedOut):
-        log_output("WARNING", "Telegram API timeout - temporary") # <--- FIXED: Use custom log function
+        logging.warning("Telegram API timeout - temporary")
         return
     elif isinstance(context.error, error.NetworkError):
-        log_output("WARNING", "Network error - connection issues") # <--- FIXED: Use custom log function
+        logging.warning("Network error - connection issues")
         return
     elif isinstance(context.error, error.BadRequest):
-        log_output("WARNING", f"Bad request: {context.error}") # <--- FIXED: Use custom log function
+        logging.warning(f"Bad request: {context.error}")
         return
     
-    log_output("ERROR", f"Unhandled error: {context.error}") # <--- FIXED: Use custom log function
+    logging.error(f"Unhandled error: {context.error}")
 
 async def main():
     """Main bot loop for headless operation."""
@@ -3059,15 +2328,13 @@ async def main():
     try:
         load_config()
     except Exception as e:
-        print(f"CRITICAL: Could not load config. {e}") 
-        log_output("CRITICAL", f"Could not load config. {e}") # <--- FIXED: Use custom log function
+        logging.critical(f"CRITICAL: Could not load config. {e}")
         return
         
     try:
         manager_instance = IvaSmsManager()
     except Exception as e:
-        print(f"CRITICAL: Failed to initialize SeleniumBase driver: {e}") 
-        log_output("CRITICAL", f"Failed to initialize SeleniumBase driver: {e}") # <--- FIXED: Use custom log function
+        logging.critical(f"CRITICAL: Failed to initialize SeleniumBase driver: {e}")
         return
 
     # Configure application with optimized settings
@@ -3106,14 +2373,14 @@ async def main():
         await application.initialize()
         await application.start()
         await application.updater.start_polling()
-        log_output("INFO", "Bot started successfully.") # <--- FIXED: Use custom log function
+        logging.info("Bot started successfully.")
 
         sms_task = asyncio.create_task(sms_watcher_task(application))
         
         await shutdown_event.wait()
     
     except (KeyboardInterrupt, SystemExit):
-        log_output("INFO", "Shutdown signal received.") # <--- FIXED: Use custom log function
+        logging.info("Shutdown signal received.")
     finally:
         shutdown_event.set()
         if sms_task and not sms_task.done():
@@ -3121,7 +2388,7 @@ async def main():
             try:
                 await sms_task
             except asyncio.CancelledError:
-                log_output("INFO", "Background SMS watcher cancelled.") # <--- FIXED: Use custom log function
+                logging.info("Background SMS watcher cancelled.")
 
         if hasattr(application, 'updater') and application.updater and application.updater.is_running():
             await application.updater.stop()
@@ -3132,7 +2399,7 @@ async def main():
         if manager_instance:
             manager_instance.cleanup()
             
-        log_output("INFO", "Bot stopped gracefully.") # <--- FIXED: Use custom log function
+        logging.info("Bot stopped gracefully.")
 
 if __name__ == "__main__":
     try:
@@ -3140,4 +2407,4 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         shutdown_event.set()
         # The main() function's finally block will handle cleanup
-        log_output("INFO", "Program interrupted by user. Initiating shutdown.") # <--- FIXED: Use custom log function
+        logging.info("Program interrupted by user. Initiating shutdown.")
